@@ -11,7 +11,9 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$min = filter_input(INPUT_GET, 'koer', FILTER_VALIDATE_INT); 
+mysqli_set_charset($conn,"utf8");
+
+$min = filter_input(INPUT_GET, 'koer', FILTER_SANITIZE_STRING); 
 
 if (empty($min)) { 
     $sth = mysqli_query($conn,"SELECT 
@@ -27,7 +29,7 @@ if (empty($min)) {
         FROM
         responses.responses
         WHERE
-        CHAR_LENGTH(responses.residency) > ".$min." 
+        responses.residency = '".$min."' 
         GROUP BY responses.gameengine;"); 
   } 
 
@@ -45,17 +47,16 @@ $json = '{
         ], 
     "rows": ['; 
   
-    $temp = []; 
-    if (!empty($rows)) { 
-        foreach ($rows as $key => $array) { 
-             $temp[] = '{"c":[{"v":"' . $array['gameengine'] . '"},{"v":' . $array['users'] . '}]}'; 
-        } 
+$temp = []; 
+if (!empty($rows)) { 
+    foreach ($rows as $key => $array) { 
+            $temp[] = '{"c":[{"v":"' . $array['gameengine'] . '"},{"v":' . $array['users'] . '}]}'; 
     } 
-  
-    $json.= join(",", $temp); 
-  
-  $json .= '] 
-}'; 
+} 
+
+$json.= join(",", $temp); 
+
+$json .= ']}'; 
 #file_put_contents('chart1.json', $json);
 #echo json_encode($rows);
 #$rows = json_encode($rows);

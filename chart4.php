@@ -13,11 +13,13 @@ if (!$conn) {
 
 mysqli_set_charset($conn,"utf8");
 
-$sth = mysqli_query($conn,"SELECT 
-gameengine, round(avg(satisfaction),1) as avg_satisfaction, round(avg(new_engine),1) as avg_new_engine
-FROM
-responses.responses
-GROUP BY gameengine;");
+$engine = filter_input(INPUT_GET, 'engine', FILTER_SANITIZE_STRING); 
+
+if (empty($engine)) {
+    $sth = mysqli_query($conn,"select price, count(price) as price_count from responses group by price;");
+} else {
+    $sth = mysqli_query($conn,"select distinct price, count(price) as price_count from responses where gameengine = '".$engine."' group by price;");
+}
 
 $rows = [];
 while($r = mysqli_fetch_array($sth, MYSQLI_ASSOC)) {
@@ -27,16 +29,15 @@ while($r = mysqli_fetch_array($sth, MYSQLI_ASSOC)) {
 
 $json = '{ 
     "cols": [
-        { "id":"gameengine", "label": "Mängumootor", "type": "string"},
-        { "id":"avg_satisfaction", "label": "Rahulolu", "type": "number"},
-        { "id":"avg_new_engine", "label": "Võimalus uue mängumootori valikuks", "type": "number"}
+        { "id":"price", "label": "Projekti hind", "type": "string"},
+        { "id":"price_count", "label": "Projekte hinnavahemikus", "type": "number"}
         ], 
     "rows": ['; 
   
     $temp = []; 
     if (!empty($rows)) { 
         foreach ($rows as $key => $array) { 
-             $temp[] = '{"c":[{"v":"' . $array['gameengine'] . '"},{"v":' . $array['avg_satisfaction'] . '},{"v":' . $array['avg_new_engine'] . '}]}'; 
+             $temp[] = '{"c":[{"v":"' . $array['price'] . '"},{"v":' . $array['price_count'] . '}]}'; 
         } 
     } 
   

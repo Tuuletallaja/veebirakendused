@@ -11,6 +11,8 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+mysqli_set_charset($conn,"utf8");
+
 
 $sth = mysqli_query($conn,"SELECT 
 age, COUNT(age) AS arv
