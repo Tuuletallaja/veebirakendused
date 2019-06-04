@@ -132,6 +132,18 @@ include 'scripts.php';
   </head>
 
   <body>
+  	<br>
+    <br>
+    <h1>Mängumootorite ja käsiloleva projekti uuring</h1>
+    <h2>Sander Aru ja Egle Puppart
+      TA18</h2>
+    <br>
+    Tahtsime uuringuga teada saada erinevates riikides elavate inimeste eelistatud mängumootorit ja rahulolu sellega ning infot nende käimas olevatest projektidest.
+    <br>
+    Uurisime küsitletute käest infot nende eelisatud mängumootori osas, rahuolu, päritolu, vanust, oma projektidesse panustatud ajast jms.
+    <br>
+    Kõige rohkem oli vastanuid Ameerika Ühendriikidest, Suurbritanniast ja Kanadast ning keskmine vanus jäi 20 – 29 eluaasta vahemikku. Kokku oli uuringule vastajaid 91.
+    <br> 
     <!--Div that will hold the pie chart-->
     <select name="country" id="blabla">
       <?php getCountry(); ?>
