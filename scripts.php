@@ -19,7 +19,6 @@ function getGameengine() {
 
     $rows = [];
     while($r = mysqli_fetch_array($sth, MYSQLI_ASSOC)) {
-        #$r = json_encode($r);
         $rows[] = $r;
     }
 
@@ -54,7 +53,6 @@ function getCountry() {
 
     $rows = [];
     while($r = mysqli_fetch_array($sth, MYSQLI_ASSOC)) {
-        #$r = json_encode($r);
         $rows[] = $r;
     }
 

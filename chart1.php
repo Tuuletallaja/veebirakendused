@@ -36,7 +36,6 @@ if (empty($min)) {
 
 $rows = [];
 while($r = mysqli_fetch_array($sth, MYSQLI_ASSOC)) {
-    #$r = json_encode($r);
     $rows[] = $r;
 }
 
@@ -55,15 +54,9 @@ if (!empty($rows)) {
 } 
 
 $json.= join(",", $temp); 
-
 $json .= ']}'; 
-#file_put_contents('chart1.json', $json);
-#echo json_encode($rows);
-#$rows = json_encode($rows);
-#print_r($rows);
-#foreach ($rows as $value) {
-#}
+
 echo $json;
 
-#mysqli_close($conn);
+mysqli_close($conn);
 ?>

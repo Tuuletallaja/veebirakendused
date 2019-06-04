@@ -1,5 +1,6 @@
 
-<?php 
+<?php
+// HTML elementide genereerimiseks loodud PHP faili sidumine  
 include 'scripts.php';
 ?>
 
@@ -7,10 +8,14 @@ include 'scripts.php';
   
   <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    
+
+    <!-- Google API registreerimine  -->
+
     <script type="text/javascript">
     // Load the Visualization API and the piechart package.
     // Lae graafikute joonistamiseks vajalikud liidesed
@@ -34,9 +39,7 @@ include 'scripts.php';
 
       var options = {
         title: 'Mängumootori kasutajate arv',
-        sliceVisibilityThreshold: 0.02,
-        width: 800,
-        height: 400
+        sliceVisibilityThreshold: 0.02
       };
 
 
@@ -60,9 +63,7 @@ include 'scripts.php';
 
       var options = {
         title: 'Inimeste vanus',
-        sliceVisibilityThreshold: 0.01,
-        width: 800,
-        height: 400
+        sliceVisibilityThreshold: 0.01
       };
 
 
@@ -86,9 +87,7 @@ include 'scripts.php';
 
       var options = {
         title: 'Rahulolu mängumootori valikuga',
-        sliceVisibilityThreshold: 0.01,
-        width: 800,
-        height: 400
+        sliceVisibilityThreshold: 0.01
       };
 
 
@@ -115,9 +114,7 @@ include 'scripts.php';
       }).responseText;
 
       var options = {
-        title: 'Projekti hind',
-        width: 800,
-        height: 400
+        title: 'Projekti hind, kui müüks tarbijale (€)'
       };
 
 
@@ -129,12 +126,39 @@ include 'scripts.php';
       chart.draw(data, options);
     }
     </script>
+
+    <script type="text/javascript">
+      google.charts.load('current', {
+        'packages':['geochart'],
+        // Note: you will need to get a mapsApiKey for your project.
+        // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+      });
+      google.charts.setOnLoadCallback(drawRegionsMap);
+
+      function drawRegionsMap() {
+        var jsonData = $.ajax({
+        url: "chart5.php",
+        dataType: "json",
+        async: false,
+      }).responseText;
+
+        var options = {
+          region: 'world',
+          displayMode: 'regions'
+        };
+
+        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
   </head>
 
   <body>
-    <!--Div that will hold the pie chart-->
+
     <select name="country" id="blabla">
-      <?php getCountry(); ?>
+      <?php getCountry(); ?> <!--  Genereerib dropdown menüü liikmed -->
     </select> 
     <div id="user_stats"></div>
     <br>
@@ -144,9 +168,10 @@ include 'scripts.php';
     <br>
     <select id="select_engine" name="gameengine">
       <option value="" selected="selected">Kõik koos</option>
-      <?php getGameengine(); ?>
+      <?php getGameengine(); ?> <!--  Genereerib dropdown menüü liikmed -->
     </select>
     <div id="price"></div>
+    <div id='regions_div'></div>
 
     <script type="text/javascript"> 
         
