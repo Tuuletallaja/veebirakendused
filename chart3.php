@@ -28,7 +28,7 @@ while($r = mysqli_fetch_array($sth, MYSQLI_ASSOC)) {
 $json = '{ 
     "cols": [
         { "id":"gameengine", "label": "Mängumootor", "type": "string"},
-        { "id":"avg_satisfaction", "label": "Rahulolu", "type": "number"},
+        { "id":"avg_satisfaction", "label": "Rahulolu mängumootori valikuga", "type": "number"},
         { "id":"avg_new_engine", "label": "Võimalus uue mängumootori valikuks", "type": "number"}
         ], 
     "rows": ['; 

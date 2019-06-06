@@ -11,11 +11,15 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+$input = filter_input(INPUT_GET, 'age', FILTER_SANITIZE_STRING); 
+
 mysqli_set_charset($conn,"utf8");
 
-
-$sth = mysqli_query($conn,"select gameengine, avg(hours) as avg_hours, avg(assets) as avg_assets from responses group by gameengine;
-");
+if (empty($input)) {
+    $sth = mysqli_query($conn,"select gameengine, avg(hours) as avg_hours, avg(assets) as avg_assets from responses where hours < 10000 and assets < 10000 group by gameengine;");
+} else {
+    $sth = mysqli_query($conn,"select gameengine, avg(hours) as avg_hours, avg(assets) as avg_assets from responses where hours < 10000 and assets < 10000 and age = '".$input."' group by gameengine;");
+}
 
 $rows = [];
 while($r = mysqli_fetch_array($sth, MYSQLI_ASSOC)) {
