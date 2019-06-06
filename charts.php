@@ -240,7 +240,7 @@ include 'scripts.php';
         console.log("Mis toimub!!");
       }); 
     </script> 
-
+    
   </body>
 
 </html>
